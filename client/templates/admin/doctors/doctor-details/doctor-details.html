@@ -1,0 +1,21 @@
+<div class="caption-full">
+  <h1>{{doctorDetails.doctor.name}}</h1>
+
+  <p>
+    <div>(M) {{doctorDetails.doctor.cellPhone}} (H) {{doctorDetails.doctor.homePhone}}</div>
+    <div ng-if="doctorDetails.doctor.email"><a href="mailto:{{doctorDetails.doctor.email}}">{{doctorDetails.doctor.email}}</a></div>
+    <div>{{doctorDetails.doctor.street}} {{doctorDetails.doctor.city}} {{doctorDetails.doctor.stateRegion}} {{doctorDetails.doctor.postalCode}}</div>
+  </p>
+
+  <div ng-cloak>
+    <a href="javascript:history.back();"><i class="fa fa-reply"></i> Back</a> |
+    <a href="/admin/doctors/edit/{{doctorDetails.doctor._id}}">Edit</a>
+  </div>
+</div>
+
+<script language="javascript">
+  $(document).ready(function() {
+    $(".nav li").removeClass("active");
+    $('#admin').addClass('active');
+  });
+</script>

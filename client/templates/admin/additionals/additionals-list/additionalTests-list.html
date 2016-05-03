@@ -1,0 +1,48 @@
+<div>
+  <div class="pstreet-header">
+    <h1><i class="fa fa-puzzle-piece"></i> AdditionalTests</h1>
+  </div>
+
+  <form>
+    <fieldset class="form-group">
+      <input type="search" id="searchAdditional" class="form-control" ng-model="vm.searchText" placeholder="Additional Name" />
+    </fieldset>
+  </form>
+
+  <table ng-cloak class="table table-hover table-condensed" ng-show="vm.additionalTests.length">
+    <thead>
+      <tr>
+        <th class="col-md-7"><a href="" ng-click="vm.sortBy='name'; vm.updateSort()">Name</a></th>
+        <th class="col-md-1">&nbsp;</th>
+      </tr>
+    </thead>
+    <!-- <tr ui-sref="additionalDetails({ additionalId: additional._id })" dir-paginate="additional in vm.additionalTests | itemsPerPage: vm.perPage" total-items="vm.additionalTestsCount"> -->
+    <tr dir-paginate="additional in vm.additionalTests | itemsPerPage: vm.perPage" total-items="vm.additionalTestsCount">
+      <td><input style="width:100%; height:100%; border-width:0px;" ng-model="additional.name" ng-blur="vm.updateAdditional(additional);" /></td>
+      <td>
+        <a href="" ng-click="vm.removeAdditional(additional)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+      </td>
+    </tr>
+  </table>
+  <dir-pagination-controls on-page-change="vm.pageChanged(newPageNumber)"></dir-pagination-controls>
+
+  <div ng-hide="vm.additionalTests.length " ng-cloak>
+    <strong>No additionalTests.</strong> Please add additionalTests. :)
+  </div>
+
+  <form class="form-inline" name="frm">
+    <div class="form-group">
+      <label class="sr-only" for="exampleInputEmail3">Name</label>
+      <input type="text" ng-model="vm.newAdditional.name" required="required" class="form-control" id="name" placeholder="Additional Name">
+    </div>
+    <button ng-click="frm.$valid && vm.addAdditional()" class="btn btn-primary"><span class="glyphicon glyphiconplus"></span> Add</button>
+  </form>
+
+</div>
+
+<script language="javascript">
+  $(document).ready(function() {
+    $(".nav li").removeClass("active");
+    $('#admin').addClass('active');
+  });
+</script>

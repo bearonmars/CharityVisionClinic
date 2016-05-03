@@ -1,0 +1,67 @@
+<div>
+  <div class="pstreet-header">
+    <h1><i class="fa fa-users"></i> Patients</h1>
+  </div>
+
+  <div style="margin-top:10px;margin-bottom:20px;">
+    <a ui-sref="patientCreate" style="font-weight:bold">Add New Patient</a>
+  </div>
+
+  <form>
+    <fieldset class="form-group">
+      <input type="search" id="searchPatient" class="form-control" ng-model="vm.searchText" placeholder="Patient Name, Phone Number, or City" />
+    </fieldset>
+  </form>
+
+  <table ng-cloak class="table table-hover table-striped" ng-show="vm.patients.length">
+    <thead>
+      <tr>
+        <th><a href="" ng-click="vm.sortBy='name'; vm.updateSort()">Name</a></th>
+        <!-- <th>Cell Phone</th> -->
+        <th>Home Phone</th>
+        <th>Email</th>
+        <th>Street</th>
+        <th><a href="" ng-click="vm.sortBy='city'; vm.updateSort()">City</a></th>
+        <!-- <th>Mo.Surname</th> -->
+        <!-- <th>Gov. ID</th> -->
+        <th>D.O.B</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <!-- <th>&nbsp;</th> -->
+      </tr>
+    </thead>
+    <!-- <tr ui-sref="patientDetails({ patientId: patient._id })" dir-paginate="patient in vm.patients | itemsPerPage: vm.perPage" total-items="vm.patientsCount"> -->
+    <tr dir-paginate="patient in vm.patients | itemsPerPage: vm.perPage" total-items="vm.patientsCount">
+      <td>
+        <a href="/patients/{{patient._id}}">{{patient.name}}</a>
+      </td>
+      <!-- <td>{{patient.cellPhone}}</td> -->
+      <td>{{patient.homePhone}}</td>
+      <td>{{patient.email}}</td>
+      <td>{{patient.street}}</td>
+      <td>{{patient.city}}</td>
+      <!-- <td>{{patient.motherSurname}}</td> -->
+      <!-- <td>{{patient.governmentId}}</td> -->
+      <td>{{patient.dob | date:'MM/dd/yyyy' }}</td>
+      <td><a href="/appointments/create/{{patient._id}}"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></a></td>
+      <td>
+        <a href="/patients/edit/{{patient._id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+      </td>
+      <!-- <td>
+        <a href="" ng-click="vm.removePatient(patient)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+      </td> -->
+    </tr>
+  </table>
+  <dir-pagination-controls on-page-change="vm.pageChanged(newPageNumber)"></dir-pagination-controls>
+
+  <div ng-hide="vm.patients.length " ng-cloak>
+    <strong>No patients.</strong> Please add patients. :)
+  </div>
+</div>
+
+<script language="javascript">
+  $(document).ready(function() {
+    $(".nav li").removeClass("active");
+    $('#patients').addClass('active');
+  });
+</script>

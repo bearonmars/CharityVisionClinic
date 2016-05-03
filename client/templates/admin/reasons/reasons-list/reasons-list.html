@@ -1,0 +1,48 @@
+<div>
+  <div class="pstreet-header">
+    <h1><i class="fa fa-puzzle-piece"></i> Reasons</h1>
+  </div>
+
+  <form>
+    <fieldset class="form-group">
+      <input type="search" id="searchReason" class="form-control" ng-model="vm.searchText" placeholder="Reason Name" />
+    </fieldset>
+  </form>
+
+  <table ng-cloak class="table table-hover table-condensed" ng-show="vm.reasons.length">
+    <thead>
+      <tr>
+        <th class="col-md-7"><a href="" ng-click="vm.sortBy='name'; vm.updateSort()">Name</a></th>
+        <th class="col-md-1">&nbsp;</th>
+      </tr>
+    </thead>
+    <!-- <tr ui-sref="reasonDetails({ reasonId: reason._id })" dir-paginate="reason in vm.reasons | itemsPerPage: vm.perPage" total-items="vm.reasonsCount"> -->
+    <tr dir-paginate="reason in vm.reasons | itemsPerPage: vm.perPage" total-items="vm.reasonsCount">
+      <td><input style="width:100%; height:100%; border-width:0px;" ng-model="reason.name" ng-blur="vm.updateReason(reason);" /></td>
+      <td>
+        <a href="" ng-click="vm.removeReason(reason)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+      </td>
+    </tr>
+  </table>
+  <dir-pagination-controls on-page-change="vm.pageChanged(newPageNumber)"></dir-pagination-controls>
+
+  <div ng-hide="vm.reasons.length " ng-cloak>
+    <strong>No reasons.</strong> Please add reasons. :)
+  </div>
+
+  <form class="form-inline" name="frm">
+    <div class="form-group">
+      <label class="sr-only" for="exampleInputEmail3">Name</label>
+      <input type="text" ng-model="vm.newReason.name" required="required" class="form-control" id="name" placeholder="Reason Name">
+    </div>
+    <button ng-click="frm.$valid && vm.addReason()" class="btn btn-primary"><span class="glyphicon glyphiconplus"></span> Add</button>
+  </form>
+
+</div>
+
+<script language="javascript">
+  $(document).ready(function() {
+    $(".nav li").removeClass("active");
+    $('#admin').addClass('active');
+  });
+</script>

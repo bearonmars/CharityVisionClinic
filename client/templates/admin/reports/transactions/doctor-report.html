@@ -1,0 +1,81 @@
+<div>
+    <div class="pstreet-header">
+        <h1><i class="fa fa-file-text-o"></i> Doctor Report</h1>
+    </div>
+
+    <form class="no-print form-inline" name="frm">
+        <div class="form-group sandbox-container">
+            <select class="form-control" ng-model="vm.selectedDoctorId" required>
+                <option value="" selected="selected">None</option>
+                <option ng-repeat="doctor in vm.doctors" value='{{doctor._id}}'>{{doctor.name}}</option>
+            </select>
+        </div>
+        <div class="form-group sandbox-container">
+            <select class="form-control" ng-change="vm.populateDates()" ng-model="vm.predefinedDateSelection">
+                <option value="">(Select)</option>
+                <option value="weekToDate">Week-to-date</option>
+                <option value="lastWeek">Last Week</option>
+                <option value="monthToDate">Month-to-date</option>
+                <option value="lastMonth">Last Month</option>
+            </select>
+        </div>
+        <div class="form-group sandbox-container">
+            <label class="sr-only" for="startDate">Start Date</label>
+            <input type="text" class="form-control" ng-model="vm.startDate" placeholder="Start Date" required>
+        </div>
+        <div class="form-group sandbox-container">
+            <label class="sr-only" for="endDate">End Date</label>
+            <input type="text" class="form-control" ng-model="vm.endDate" placeholder="End Date" required>
+        </div>
+        <div class="form-group sandbox-container">
+            <select class="form-control" ng-model="vm.amountOrCount" required>
+                <option value="amount" selected="selected">Amount</option>
+                <option value="count">Count</option>
+            </select>
+        </div>
+        <div class="form-group sandbox-container">
+            <label class="sr-only" for="discount">Discount</label>
+            <input class="form-control" type="number" name="discount" ng-model="vm.discountFilter" min="0" max="100"
+            step="5" placeholder="Discount % >=" style="width:150px" />
+        </div>
+        <button class="btn btn-primary" ng-disabled="!frm.$valid" ng-click="frm.$valid && vm.generateReport()">Generate</button>
+        <button class="btn btn-primary" ng-disabled="!frm.$valid" ng-click="frm.$valid && vm.downloadReport()">Download</button>
+        <script language="javascript">
+            $('.sandbox-container input').datepicker({});
+        </script>
+    </form>
+
+    <p>
+        For downloading, rename the filename to be "xxxxxxxxx.<span style="font-weight:bold;font-size:20px;color:red;">csv</span>".
+    </p>
+
+    <div class="row">
+        <!-- <table ng-cloak class="table table-hover table-striped" ng-show="vm.transactions.length"> -->
+        <table ng-cloak class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th ng-repeat="header in vm.columnHeaders" style="text-align:right;">{{header}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in vm.reportData">
+                    <td ng-style="(row.itemName === '[Products/Services]' || row.itemName === '[Doctors]') && {'font-weight':'bold'}">{{row.itemName}}</td>
+                    <!-- <td ng-repeat="col in row.data">{{col.amount | currency}}</td> -->
+                    <td ng-repeat="col in row.data" style="text-align:right;" ng-style="col.date === 'Total:' && {'font-weight':'bold'}">
+                        <span ng-if="col.amount !== ''">
+              {{col.amount | number}}
+            </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script language="javascript">
+    $(document).ready(function () {
+        $(".nav li").removeClass("active");
+        $('#admin').addClass('active');
+    });
+</script>

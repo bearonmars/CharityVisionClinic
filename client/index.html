@@ -1,0 +1,73 @@
+<head>
+  <base href="/">
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/"><img src="/images/logo.png" border="0" style="height:40px; margin-top:-10px;" alt="Charity Vision Clinic"></a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li id="home" class="active"><a href="/"><i class="fa fa-home"></i> Home</a></li>
+        <li id="patients"><a href="/patients"><i class="fa fa-users"></i> Patients</a></li>
+        <li id="appointments"><a href="/appointments"><i class="fa fa-calendar"></i> Appointments</a></li>
+        <li id="exams"><a href="/exams"><i class="fa fa-area-chart"></i> Optic Exams</a></li>
+        <li id="transactions"><a href="/transactions"><span class="glyphicon glyphicon-shopping-cart"></span> Transactions</a></li>
+        <li id="admin" class="dropdown" ng-show="$root.currentUser.roles[0] === 'Admin'">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i> Admin<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/admin/doctors"><i class="fa fa-user-md"></i> Doctors</a></li>
+            <li><a href="/admin/reasons"><i class="fa fa-puzzle-piece"></i> Appointment Reasons</a></li>
+            <li><a href="/admin/products"><i class="fa fa-rocket"></i> Products/Services</a></li>
+            <li><a href="/admin/howdidyoufindus"><i class="fa fa-rocket"></i> How did you find us?</a></li>
+            <li><a href="/admin/additionalTests"><i class="fa fa-rocket"></i> Additional Tests</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Reports</li>
+            <li><a href="/admin/reports/transactions"><i class="fa fa-file-text-o"></i> Summary Report</a></li>
+            <li><a href="/admin/reports/depositreport"><i class="fa fa-file-text-o"></i> Deposit Report</a></li>
+            <li><a href="/admin/reports/transactions/doctor"><i class="fa fa-file-text-o"></i> Doctor Report</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Accounts</li>
+            <li><a href="/accounts/register"><i class="fa fa-user"></i> Register User</a></li>
+            <li><a href="/accounts/users"><i class="fa fa-users"></i> Users</a></li>
+
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Settings</li>
+            <li><a href="/admin/clinics">Set Clinic Info</a></li>
+          </ul>
+        </li>
+        <li id="login" ng-controller="homeController" ng-show="$root.currentUser"><a href="/accounts/logout"><i class="fa fa-user"></i> {{$auth.currentUser.profile.name}} (Log Out)</a></li>
+        <li id="login" ng-controller="homeController" ng-show="$root.currentUser"><a href="/accounts/update"><i class="fa fa-user"></i> Change Password</a></li>
+        <li id="login" ng-controller="homeController" ng-hide="$root.currentUser"><a href="/accounts/login"><i class="fa fa-user"></i> Log In</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container" ng-strict-di="">
+    <div ui-view=""></div>
+  </div>
+
+  <br />
+  <br />
+  <br />
+  <br />
+  <footer class="footer">
+    <section class="container-fluid">
+      <div class="row-fluid bg-color4">
+        <section class="container">
+          <div class="row footer-padding">
+            <article class="span7">
+              <div class="footer-company-details fg-color3">
+                <h4>Charity Vision Clinic</h4>
+                <p style="font-size:12px;">(801) 555-1234 | admin@charityvisinoclinic.com</p>
+                <p style="font-size:12px;">6925 S Union Park Center, Suite 100, Midvale, UT 84047 USA</p>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </section>
+  </footer>
+</body>

@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="pstreet-header">
+    <h1><i class="fa fa-user"></i> Update</h1>
+  </div>
+  <br />
+  <br />
+  <form class="update">
+    <div class="form-group row">
+      <label for="inputOldPassword" class="col-sm-2 form-control-label">Old Password</label>
+      <div class="col-sm-6">
+        <input type="password" name="oldPassword" ng-model="vm.oldPassword" class="form-control" id="inputOldPassword" placeholder="Old Password" required>
+      </div>
+    </div>
+      <div class="form-group row">
+        <label for="inputNewPassword" class="col-sm-2 form-control-label">New Password</label>
+        <div class="col-sm-6">
+          <input type="password" name="newPassword" ng-model="vm.newPassword" class="form-control" id="inputNewPassword" placeholder="New Password" required>
+        </div>
+      </div>
+    <div class="form-group row">
+      <div class="col-sm-offset-2 col-sm-6">
+        <button ng-click="vm.update()" class="btn btn-secondary">Update</button>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label style="color:red; font-weight:bold;">{{vm.errorMessage}}</label>
+      <label style="color:blue; font-weight:bold;">{{vm.message}}</label>
+    </div>
+  </form>
+</div>

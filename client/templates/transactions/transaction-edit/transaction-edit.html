@@ -1,0 +1,166 @@
+<div class="row">
+
+  <div>
+    <!-- /<h1>Transaction <small>Date: {{vm.transaction.created | date: 'short'}}</small></h1> -->
+    <h1>Transaction <small>({{vm.transaction.created | date: 'short'}})</small></h1>
+  </div>
+
+  <div style="margin-top:10px; margin-left:5px;">
+    <div style="margin-bottom:30px;">
+      <h3>Patient: <span style="color:#c1c1d7; font-weight:bold;">{{vm.transaction.patient.name}}</span></h3>
+    </div>
+
+    <div class="row no-print" style="margin-top:20px">
+      <div class="col-md-8">
+        <form class="form-inline" role="form">
+          <div class="form-group">
+            <label for="items">Items:</label>
+            <select class="form-control" ng-model="vm.selectedItemId" required>
+              <option ng-repeat="product in vm.products" value="{{product._id}}">{{product.name}} - ${{product.price}}</option>
+            </select>
+          </div>
+          <button ng-click="vm.addItem()" class="btn btn-primary"><span class="glyphicon glyphiconplus"></span>Add Item</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:20px">
+      <div class="col-md-8" ng-show="vm.transaction.items.length">
+        <table ng-cloak class="table table-hover table-condensed">
+          <thead>
+            <tr>
+              <th class="col-md-4">Item</th>
+              <th class="col-md-2">Price</th>
+              <th class="col-md-4"></th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in vm.transaction.items">
+              <td>{{item.name}}</td>
+              <td>{{item.price | currency}}</td>
+              <td>
+                <div ng-show="item.isDoctorProduct">
+                  <select class="form-control" ng-model="item.doctor._id" ng-change="vm.modified = true">
+                    <option value="" selected="selected">Select Doctor</option>
+                    <option ng-repeat="doctor in vm.doctors" value='{{doctor._id}}'>{{doctor.name}}</option>
+                  </select>
+                </div>
+              </td>
+              <td class="no-print">
+                <a ng-if="vm.isFinanceUser" href="" ng-click="vm.removeItem($index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">&nbsp;</td>
+            </tr>
+          </tbody>
+          <tfoot style="background-color:#f0f0f5;">
+            <tr>
+              <th>Subtotal</th>
+              <td>{{vm.getSubtotal() | currency}}</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <th>Discount
+                <input ng-disabled="!vm.isFinanceUser" type="number" name="discount"
+                ng-model="vm.transaction.discountPercentage" ng-change="vm.modified = true;"
+                min="0" max="100" step="5" style="margin-left:5px;padding-left:5px;width:50px" />% </th>
+              <td>{{vm.getDiscount() | currency}}</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <th>Total</th>
+              <td>{{vm.getTotal() | currency}}</td>
+              <td>&nbsp;</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <div class="row no-print" style="margin-top:20px" ng-if="vm.isFinanceUser">
+      <div class="col-md-8">
+        <form class="form-inline" role="form" name="paymentForm">
+          <div class="form-group">
+            <label for="paymentAmount">Payment Amount:</label>
+            <input type="number" min="1" step="10" class="form-control" style="width:80px"
+            ng-model="vm.paymentAmount" id="paymentAmount">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" ng-model="vm.paidByInsurance"> Paid By Insurance
+              </label>
+            </div>
+          </div>
+          <button ng-click="paymentForm.$valid && vm.addPayment()" class="btn btn-primary">Add Payment</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:20px">
+      <div class="col-md-8">
+        <table ng-cloak class="table table-hover table-condensed">
+          <thead>
+            <tr>
+              <th class="col-md-4">Payment</th>
+              <th class="col-md-4">Date</th>
+              <th class="col-md-4">Paid By Insurance</th>
+              <th ng-if="vm.isFinanceUser">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="payment in vm.transaction.payments">
+              <td>{{payment.paymentAmount | currency}}</td>
+              <td>{{payment.paymentDate | date:'medium' }}</td>
+              <td>{{payment.paidByInsurance | userfriendly}}</td>
+              <td ng-if="vm.isFinanceUser" class="no-print">
+                <a href="" ng-click="vm.removePayment($index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">&nbsp;</td>
+            </tr>
+          </tbody>
+          <tfoot style="background-color:#e0e0eb;">
+            <tr>
+              <th>Payment Total</th>
+              <td>{{vm.getPaymentTotal() | currency}}</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <th ng-style="vm.getBalance() > 0 && {'color':'red'} || {'color': 'blue'}">Balance</th>
+              <th ng-style="vm.getBalance() > 0 && {'color':'red'} || {'color': 'blue'}">{{vm.getBalance() | currency}}</th>
+              <td>&nbsp;</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <div class="row no-print" style="margin-top:20px">
+      <div class="col-md-8">
+        <button ng-click="vm.updateTransaction()" ng-disabled="!vm.modified" class="btn btn-primary"><span class="glyphicon glyphiconplus"></span>Update Transaction</button>
+      </div>
+      <div class="col-md-8" style="color:red; font-weight:bold;" ng-if="vm.modified">
+        It has been modified. You must press "Update Transaction" button to apply the changes to the system.
+      </div>
+    </div>
+
+    <div class="row no-print" style="margin-top:20px">
+      <div class="col-md-8">
+        <a href="javascript:history.back();">Back</a> |
+        <a href="javascript:window.print();">Print</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<script language="javascript">
+  $(document).ready(function() {
+    $(".nav li").removeClass("active");
+    $('#transactions').addClass('active');
+  });
+</script>

@@ -1,0 +1,79 @@
+<div>
+  <div class="pstreet-header">
+    <h1><i class="fa fa-calendar-plus-o"></i> Add Appointment</h1>
+  </div>
+</div>
+
+<div>&nbsp;</div>
+
+<form role="form" name="frm">
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="name">Patient Name</label>
+    <div class="col-sm-6">
+      {{vm.patient.name}}
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="reason">Reason</label>
+    <div class="col-sm-6">
+      <select class="form-control" ng-model="vm.newAppointment.reason"  required>
+        <option value="" selected="selected">None</option>
+        <option ng-repeat="reason in vm.reasons" value="{{reason.name}}">{{reason.name}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="homePhone">Appointment Date</label>
+    <div class="col-sm-6">
+      <input type="datetime-local" min="2016-02-01" step="900" required="required" ng-model="vm.newAppointment.appointmentDate" ng-change="vm.selectAppointmentDate(vm.newAppointment.appointmentDate)" >
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-offset-2 col-sm-6">
+      <button ng-click="frm.$valid && vm.addAppointment()" class="btn btn-primary"><span class="glyphicon glyphiconplus"></span> Add</button>
+    </div>
+  </div>
+</form>
+
+<div>
+  <table ng-cloak class="table table-hover table-condensed" ng-show="vm.appointments.length">
+    <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th><a href="" ng-click="vm.sortBy='patient.name'; vm.updateSort()">Patient Name</a></th>
+        <th><a href="" ng-click="vm.sortBy='reason'; vm.updateSort()">Reason</a></th>
+        <th><a href="" ng-click="vm.sortBy='appointmentDate'; vm.updateSort()">Appointment Date</a></th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <!-- <tr ui-sref="appointmentDetails({ appointmentId: appointment._id })" dir-paginate="appointment in vm.appointments | itemsPerPage: vm.perPage" total-items="vm.appointmentsCount"> -->
+    <tr ng-repeat="appointment in vm.appointments">
+      <td>
+        <a href="/appointments/{{appointment._id}}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+      </td>
+      <td><a href="/patients/{{appointment.patient._id}}">{{appointment.patient.name}}</a></td>
+      <td>{{appointment.reason}}</td>
+      <td>{{appointment.appointmentDate | date:'medium' }}</td>
+      <td>
+        <a href="/appointments/edit/{{appointment._id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+      </td>
+      <td>
+        <a href="" ng-click="vm.removeAppointment(appointment)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+      </td>
+    </tr>
+  </table>
+
+</div>
+
+<div class="alert" ng-cloak>
+  <a href="javascript:history.back();">Back</a>
+</div>
+
+<script language="javascript">
+  $(document).ready(function() {
+    $(".nav li").removeClass("active");
+    $('#appointments').addClass('active');
+  });
+</script>

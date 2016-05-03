@@ -1,0 +1,740 @@
+<div class="row">
+  <h1>Edit Exam</h1>
+</div>
+
+<div>&nbsp;</div>
+
+<form name="frm">
+
+  <!-- <div class="col-sm-12" style="color:red; font-weight:bold; font-size:20px;" ng-if="!vm.isDoctor">
+    Only doctors can update an exam.
+  </div> -->
+
+  <!-- <div class="col-sm-12" style="color:red; font-weight:bold; font-size:20px;" ng-if="vm.isDoctor && frm.$dirty"> -->
+  <div class="col-sm-12" style="color:red; font-weight:bold; font-size:20px;" ng-if="frm.$dirty">
+    The data has been modified. You must press "Update Exam note" button to apply the changes to the system.
+  </div>
+
+  <!-- Patient Name -->
+  <div class="form-group row">
+    <label for="patientName" class="col-md-2 form-control-label">Patient Name</label>
+    <div class="col-md-10">
+      {{vm.exam.patient.name}}
+    </div>
+  </div>
+
+  <!-- Doctor -->
+  <div class="form-group row">
+    <label class="col-md-2 form-control-label">Doctor</label>
+    <div class="col-md-6">
+      <select class="form-control" ng-model="vm.exam.doctor._id" required>
+        <option value="" selected="selected">None</option>
+        <option ng-repeat="doctor in vm.doctors" ng-selected="doctor._id == vm.exam.doctor._id" value='{{doctor._id}}'>{{doctor.name}}</option>
+      </select>
+    </div>
+    <div class="col-md-4">&nbsp;</div>
+  </div>
+
+  <!-- Patient Concerns -->
+  <div class="form-group row">
+    <label class="col-md-2 form-control-label">Patient Concerns</label>
+    <div class="col-md-10">
+      <textarea class="form-control" ng-model="vm.exam.patientConcerns" rows="4"></textarea>
+    </div>
+  </div>
+
+  <!-- Blood Pressure -->
+  <div class="form-group row">
+    <label class="col-md-2 form-control-label">Blood Pressure</label>
+    <div class="col-md-10">
+      <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.bloodPressure.systolic" style="width:50px;"> /
+      <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.bloodPressure.diastolic" style="width:50px;">
+    </div>
+  </div>
+
+  <!-- Blood Type -->
+  <div class="form-group row">
+    <label class="col-md-2 form-control-label">Blood Type</label>
+    <div class="col-md-10">
+      <div class="radio-inline">
+        <label>
+          <input type="radio" name="bloodType" ng-model="vm.exam.bloodType" value="A"> A
+        </label>
+      </div>
+      <div class="radio-inline">
+        <label>
+          <input type="radio" name="bloodType" ng-model="vm.exam.bloodType" value="B"> B
+        </label>
+      </div>
+      <div class="radio-inline">
+        <label>
+          <input type="radio" name="bloodType" ng-model="vm.exam.bloodType" value="AB"> AB
+        </label>
+      </div>
+      <div class="radio-inline">
+        <label>
+          <input type="radio" name="bloodType" ng-model="vm.exam.bloodType" value="O"> O
+        </label>
+      </div>
+      <div class="radio-inline" style="margin-left:30px;">
+        <label>
+          <input type="radio" name="bloodTypePositiveNegative" ng-model="vm.exam.bloodTypePositiveNegative" value="+">+
+        </label>
+      </div>
+      <div class="radio-inline">
+        <label>
+          <input type="radio" name="bloodTypePositiveNegative" ng-model="vm.exam.bloodTypePositiveNegative" value="-">--
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Previous Eye Procedures -->
+  <div class="form-group row">
+    <label class="col-md-2 form-control-label">Prev. Eye Procedures</label>
+    <div class="col-md-10">
+      <input type="text" class="form-control-inline" ng-model="vm.exam.PreviousEyeProcedures" style="width:500px;">
+    </div>
+  </div>
+
+  <!-- Medical Conditions -->
+  <div class="form-group row">
+    <label class="col-md-2 form-control-label">Medical Conditions</label>
+    <div class="col-md-10">
+      <div class="checkbox-inline">
+        <label>
+          <input type="checkbox" ng-model="vm.exam.diabetic" value="true">Diabetic
+        </label>
+      </div>
+      <div class="checkbox-inline">
+        <label>
+          <input type="checkbox" ng-model="vm.exam.heartDisease" value="true">Heart Disease
+        </label>
+      </div>
+      <div class="checkbox-inline">
+        <label>
+          <input type="checkbox" ng-model="vm.exam.asthma" value="true">Asthma
+        </label>
+      </div>
+      <div class="checkbox-inline">
+        <label>
+          <input type="checkbox" ng-model="vm.exam.other" value="true">Other
+          <input type="text" ng-model="vm.exam.otherText" style="width:300px;">
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Family History -->
+  <div class="form-group row">
+    <label class="col-md-2 form-control-label">Family History</label>
+    <div class="col-md-10">
+      <div class="checkbox-inline">
+        <label>
+          <input type="checkbox" ng-model="vm.exam.familyDiabetic" value="true">Diabetic
+        </label>
+      </div>
+      <div class="checkbox-inline">
+        <label>
+          <input type="checkbox" ng-model="vm.exam.familyHeartDisease" value="true">Heart Disease
+        </label>
+      </div>
+      <div class="checkbox-inline">
+        <label>
+          <input type="checkbox" ng-model="vm.exam.familyAsthma" value="true">Asthma
+        </label>
+      </div>
+      <div class="checkbox-inline">
+        <label>
+          <input type="checkbox" ng-model="vm.exam.familyOther" value="true">Other
+          <input type="text" ng-model="vm.exam.familyOtherText" style="width:300px;">
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Current Medications -->
+  <div class="form-group row">
+    <label class="col-md-2 form-control-label">Current Medications</label>
+    <div class="col-md-10">
+      <input type="text" class="form-control-inline" ng-model="vm.exam.currentMedications" style="width:500px;">
+    </div>
+  </div>
+
+  <!-- Allergies To Medications -->
+  <div class="form-group row">
+    <label class="col-md-2 form-control-label">Allergies To Meds</label>
+    <div class="col-md-10">
+      <input type="text" class="form-control-inline" ng-model="vm.exam.allergiesMedicines" style="width:500px;">
+    </div>
+  </div>
+
+  <!-- Unaided Acuity -->
+  <div class="form-group row">
+    <label class="col-md-2 form-control-label">Unaided Acuity</label>
+    <div class="col-md-10">
+      (L)
+      <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.unaidedAcuity.leftEye.first" style="width:50px;"> /
+      <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.unaidedAcuity.leftEye.second" style="width:50px;"> &nbsp;&nbsp;&nbsp; (R)
+      <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.unaidedAcuity.rightEye.first" style="width:50px;"> /
+      <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.unaidedAcuity.rightEye.second" style="width:50px;">
+    </div>
+  </div>
+
+  <!-- IO Pressure -->
+  <div class="form-group row">
+    <label class="col-md-2 form-control-label">IO Pressure</label>
+    <div class="col-md-10">
+      <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.ioPressure.left" style="width:50px;"> /
+      <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.ioPressure.right" style="width:50px;">
+    </div>
+  </div>
+
+  <!-- Left Eye -->
+  <div class="form-group row">
+    <label class="col-md-2 form-control-label">Left Eye</label>
+    <div class="col-md-10">
+      <div class="row">
+        <div class="col-md-1 form-control-inline">
+          <label class="form-control-label" style="color:blue">Near</label>
+        </div>
+
+        <div class="checkbox-inline">
+          <label class="form-control-label-inline">Sph</label>
+          <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.leftEye.near.sph" style="width:50px;">
+        </div>
+
+        <div class="checkbox-inline">
+          <label class="form-control-label-inline">Cyl</label>
+          <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.leftEye.near.cyl" style="width:50px;">
+        </div>
+
+        <div class="checkbox-inline">
+          <label class="form-control-label-inline">Axis</label>
+          <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.leftEye.near.axis" style="width:50px;">
+        </div>
+
+        <div class="checkbox-inline">
+          <label class="form-control-label-inline">Pd</label>
+          <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.leftEye.near.pd" style="width:50px;">
+        </div>
+
+        <div class="checkbox-inline">
+          <label class="form-control-label-inline">Prism</label>
+          <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.leftEye.near.prism" style="width:50px;">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-1 form-control-inline">
+          <label class="form-control-label" style="color:brown">Distance</label>
+        </div>
+
+        <div class="checkbox-inline">
+          <label class="form-control-label-inline">Sph</label>
+          <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.leftEye.distance.sph" style="width:50px;">
+        </div>
+
+        <div class="checkbox-inline">
+          <label class="form-control-label-inline">Cyl</label>
+          <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.leftEye.distance.cyl" style="width:50px;">
+        </div>
+
+        <div class="checkbox-inline">
+          <label class="form-control-label-inline">Axis</label>
+          <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.leftEye.distance.axis" style="width:50px;">
+        </div>
+      </div>
+
+      <!-- Left Eye Photo -->
+      <div class="row">
+        <div class="col-md-4">
+          <table style="background-image: url('/images/blue_eye.png'); width:300px; height:182px;" border=1>
+            <tr style="padding-top:0px;">
+              <td style="height:10px;" colspan="10">&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="padding-left:8px; width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location11">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location12">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location13">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location14">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location15">
+              </td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="padding-left:8px; width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location21">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location22">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location23">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location24">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location25">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location26">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location27">
+              </td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="padding-left:8px; width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location31">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location32">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location33">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location34">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location35">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location36">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location37">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location38">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location39">
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-left:8px; width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location41">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location42">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location43">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location44">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location45">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location46">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location47">
+              </td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="padding-left:8px; width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location51">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location52">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location53">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location54">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.leftEye.marks.location55">
+              </td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+            </tr>
+            <tr style="padding-top:0px;">
+              <td style="height:10px;" colspan="10">&nbsp;</td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-3" style="margin-left:0px; padding-left:0px;">
+          <textarea style="height:182px; width:100%" ng-model="vm.exam.leftEye.marks.notes"></textarea>
+        </div>
+        <div class="col-md-3" style="margin-left:0px; padding-left:0px;">
+          <table>
+            <tr>
+              <td style="text-align:right; padding-right:5px">Lid</td>
+              <td>
+                <input type="text" ng-model="vm.exam.leftEye.lid" />
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:right; padding-right:5px">Lens</td>
+              <td>
+                <input type="text" ng-model="vm.exam.leftEye.lens" />
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:right; padding-right:5px">Cornea</td>
+              <td>
+                <input type="text" ng-model="vm.exam.leftEye.cornea" />
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:right; padding-right:5px">Conjunctiva</td>
+              <td>
+                <input type="text" ng-model="vm.exam.leftEye.conjunctiva" />
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:right; padding-right:5px">Iris/Pupil</td>
+              <td>
+                <input type="text" ng-model="vm.exam.leftEye.iris_pupil" />
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:right; padding-right:5px">Sclera</td>
+              <td>
+                <input type="text" ng-model="vm.exam.leftEye.sclera" />
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:right; padding-right:5px">Vitreous</td>
+              <td>
+                <input type="text" ng-model="vm.exam.leftEye.vitreous" />
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:right; padding-right:5px">Fundus</td>
+              <td>
+                <input type="text" ng-model="vm.exam.leftEye.fundus" />
+              </td>
+            </tr>
+          </table>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Eye -->
+  <div class="form-group row">
+    <label class="col-md-2 form-control-label">Right Eye</label>
+    <div class="col-md-10">
+      <div class="row">
+        <div class="col-md-1 form-control-inline">
+          <label class="form-control-label" style="color:blue">Near</label>
+        </div>
+
+        <div class="checkbox-inline">
+          <label class="form-control-label-inline">Sph</label>
+          <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.rightEye.near.sph" style="width:50px;">
+        </div>
+
+        <div class="checkbox-inline">
+          <label class="form-control-label-inline">Cyl</label>
+          <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.rightEye.near.cyl" style="width:50px;">
+        </div>
+
+        <div class="checkbox-inline">
+          <label class="form-control-label-inline">Axis</label>
+          <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.rightEye.near.axis" style="width:50px;">
+        </div>
+
+        <div class="checkbox-inline">
+          <label class="form-control-label-inline">Pd</label>
+          <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.rightEye.near.pd" style="width:50px;">
+        </div>
+
+        <div class="checkbox-inline">
+          <label class="form-control-label-inline">Prism</label>
+          <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.rightEye.near.prism" style="width:50px;">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-1 form-control-inline">
+          <label class="form-control-label" style="color:brown">Distance</label>
+        </div>
+
+        <div class="checkbox-inline">
+          <label class="form-control-label-inline">Sph</label>
+          <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.rightEye.distance.sph" style="width:50px;">
+        </div>
+
+        <div class="checkbox-inline">
+          <label class="form-control-label-inline">Cyl</label>
+          <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.rightEye.distance.cyl" style="width:50px;">
+        </div>
+
+        <div class="checkbox-inline">
+          <label class="form-control-label-inline">Axis</label>
+          <input class="form-control-inline" type="number" step="any" ng-model="vm.exam.rightEye.distance.axis" style="width:50px;">
+        </div>
+      </div>
+
+      <!-- Right Eye Photo -->
+      <div class="row">
+        <div class="col-md-4">
+          <table style="background-image: url('/images/orange_eye.png'); width:300px; height:182px;" border=1>
+            <tr style="padding-top:0px;">
+              <td style="height:10px;" colspan="10">&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="padding-left:8px; width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location11">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location12">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location13">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location14">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location15">
+              </td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="padding-left:8px; width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location21">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location22">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location23">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location24">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location25">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location26">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location27">
+              </td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="padding-left:8px; width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location31">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location32">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location33">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location34">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location35">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location36">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location37">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location38">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location39">
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-left:8px; width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location41">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location42">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location43">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location44">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location45">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location46">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location47">
+              </td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="padding-left:8px; width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location51">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location52">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location53">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location54">
+              </td>
+              <td style="width:10px; height:10px;">
+                <input type="checkbox" ng-model="vm.exam.rightEye.marks.location55">
+              </td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+              <td style="width:10px; height:10px;">&nbsp;</td>
+            </tr>
+            <tr style="padding-top:0px;">
+              <td style="height:10px;" colspan="10">&nbsp;</td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-3" style="margin-left:0px; padding-left:0px;">
+          <textarea style="height:182px; width:100%" ng-model="vm.exam.rightEye.marks.notes"></textarea>
+        </div>
+        <div class="col-md-3" style="margin-left:0px; padding-left:0px;">
+          <table>
+            <tr>
+              <td style="text-align:right; padding-right:5px">Lid</td>
+              <td>
+                <input type="text" ng-model="vm.exam.rightEye.lid" />
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:right; padding-right:5px">Lens</td>
+              <td>
+                <input type="text" ng-model="vm.exam.rightEye.lens" />
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:right; padding-right:5px">Cornea</td>
+              <td>
+                <input type="text" ng-model="vm.exam.rightEye.cornea" />
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:right; padding-right:5px">Conjunctiva</td>
+              <td>
+                <input type="text" ng-model="vm.exam.rightEye.conjunctiva" />
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:right; padding-right:5px">Iris/Pupil</td>
+              <td>
+                <input type="text" ng-model="vm.exam.rightEye.iris_pupil" />
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:right; padding-right:5px">Sclera</td>
+              <td>
+                <input type="text" ng-model="vm.exam.rightEye.sclera" />
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:right; padding-right:5px">Vitreous</td>
+              <td>
+                <input type="text" ng-model="vm.exam.rightEye.vitreous" />
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:right; padding-right:5px">Fundus</td>
+              <td>
+                <input type="text" ng-model="vm.exam.rightEye.fundus" />
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Recommendations -->
+  <div class="form-group row">
+    <label class="col-md-2 form-control-label">Recommendations</label>
+    <div class="col-md-10">
+      <textarea class="form-control" ng-model="vm.exam.recommendations" rows="5"></textarea>
+    </div>
+  </div>
+
+  <!-- Additional Tests -->
+  <div class="form-group row" ng-repeat="test in vm.exam.additionalTests">
+    <label class="col-md-2 form-control-label">{{test.name}}</label>
+    <div class="col-md-10">
+      (L)
+      <input class="form-control-inline" ng-model="test.leftEye" style="width:300px;"> / (R)
+      <input class="form-control-inline" ng-model="test.rightEye" style="width:300px;">
+    </div>
+  </div>
+
+  <!-- <div class="form-group row" ng-if="vm.isDoctor"> -->
+  <div class="form-group row">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button ng-disabled="!frm.$dirty" ng-click="frm.$valid && vm.updateExam()" class="btn btn-primary">Update Exam</button>
+    </div>
+    <div class="col-sm-offset-2 col-sm-10" style="color:red; font-weight:bold; font-size:20px;" ng-if="frm.$dirty">
+      The data has been modified. You must press "Update Exam note" button to apply the changes to the system.
+    </div>
+  </div>
+</form>
+
+<div class="alert" ng-cloak>
+  <a href="javascript:history.back();"><i class="fa fa-reply"></i> Back</a>
+</div>
+
+<script language="javascript">
+  $(document).ready(function() {
+    $(".nav li").removeClass("active");
+    $('#exams').addClass('active');
+  });
+</script>

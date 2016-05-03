@@ -1,0 +1,50 @@
+<div>
+  <div class="paddress-header">
+    <h1>Clinic</h1>
+  </div>
+
+  <form role="form" class="spacerUp30" name="frm">
+    <div class="form-group row">
+      <label class="col-sm-1 form-control-label" for="name">Name</label>
+      <div class="col-sm-6">
+        <input type="text" ng-model="vm.clinicSetting.value.name" class="form-control" required="required" id="name" placeholder="Enter Name">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-1 form-control-label" for="phone">Phone</label>
+      <div class="col-sm-6">
+        <input type="text" ng-model="vm.clinicSetting.value.phone" class="form-control" required="required" id="phone" placeholder="Enter Phone">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-1 form-control-label" for="fax">Fax</label>
+      <div class="col-sm-6">
+        <input type="text" ng-model="vm.clinicSetting.value.fax" class="form-control" id="fax" placeholder="Enter Fax">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-1 form-control-label" for="email">Email</label>
+      <div class="col-sm-6">
+        <input type="email" ng-model="vm.clinicSetting.value.email" class="form-control" required="required" id="email" placeholder="Enter email">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-1 form-control-label" for="address">Address</label>
+      <div class="col-sm-6">
+        <input type="text" ng-model="vm.clinicSetting.value.address" class="form-control" required="required" id="address" placeholder="Enter Full Address">
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-offset-2 col-sm-6">
+        <button ng-click="frm.$valid && vm.saveClinic()" class="btn btn-primary"><span class="glyphicon glyphiconedit"></span> Save</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script language="javascript">
+  $(document).ready(function() {
+    $(".nav li").removeClass("active");
+    $('#admin').addClass('active');
+  });
+</script>

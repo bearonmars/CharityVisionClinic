@@ -1,0 +1,78 @@
+<div>
+  <div class="pstreet-header">
+    <h1><span class="glyphicon glyphicon-shopping-cart"></span> Transactions</h1>
+  </div>
+
+  <div class="no-print" style="margin-top:10px;margin-bottom:20px;">
+    <b>Create a new transaction from the <a href="/patients">Patients tab</a>.</b>
+  </div>
+
+  <form class="no-print">
+    <fieldset class="form-group">
+      <input type="search" id="searchTransaction" class="form-control" ng-model="vm.searchText" placeholder="Search Transactions by Patient Name" />
+    </fieldset>
+  </form>
+
+  <div>
+    Total Balance: <strong>{{vm.extendedTransactions.totalBalance | currency}}</strong>
+    &nbsp;/&nbsp;
+    Transactions Count: <strong>{{vm.transactionsCount}}</strong>
+  </div>
+
+  <table ng-cloak class="table table-hover table-striped" ng-show="vm.extendedTransactions.transactions.length">
+    <thead>
+      <tr>
+        <!-- <th class="no-print">&nbsp;</th> -->
+        <th class="no-print"><a href="" ng-click="vm.sortBy='patient.name'; vm.updateSort()">Patient Name</a></th>
+        <th><a href="" ng-click="vm.sortBy='created'; vm.updateSort()">Transaction Date</a></th>
+        <th>Items</th>
+        <th>Subtotal</th>
+        <th>Discount</th>
+        <th>Total</th>
+        <th>Payment</th>
+        <th>Balance</th>
+        <th class="no-print">&nbsp;</th>
+        <th class="no-print">&nbsp;</th>
+      </tr>
+    </thead>
+    <!-- <tr ui-sref="transactionDetails({ transactionId: transaction._id })" dir-paginate="transaction in vm.transactions | itemsPerPage: vm.perPage" total-items="vm.transactionsCount"> -->
+    <tr dir-paginate="transaction in vm.extendedTransactions.transactions | itemsPerPage: vm.perPage" total-items="vm.transactionsCount">
+    <!-- <tr ng-repeat="transaction in vm.extendedTransactions.transactions"> -->
+      <td class="no-print"><a href="/patients/{{transaction.patient._id}}">{{transaction.patient.name}}</a></td>
+      <td>{{transaction.created | date:'medium' }}</td>
+      <td>{{vm.getItems(transaction.items)}}</td>
+      <td>{{transaction.subtotal | currency}}</td>
+      <td>{{transaction.discount | currency}}</td>
+      <td>{{transaction.total | currency}}</td>
+      <td>{{transaction.paymentTotal | currency}}</td>
+      <td ng-style="transaction.balance > 0 && {'color':'red'} || {'color': 'blue'}">{{transaction.balance | currency}}</td>
+      <td class="no-print">
+        <a href="/transactions/edit/{{transaction._id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+      </td>
+      <td class="no-print">
+        <a href="" ng-click="vm.removeTransaction(transaction)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+      </td>
+    </tr>
+  </table>
+  <dir-pagination-controls on-page-change="vm.pageChanged(newPageNumber)"></dir-pagination-controls>
+
+  <!-- <div class="no-print" ng-hide="vm.transactions.length " ng-cloak>
+    <strong>No transactions found.</strong>
+  </div> -->
+
+  <div>
+    <form class="form-inline" name="frm2">
+      <div class="form-group">
+        <label for="balanceSearch">Transactions with the balance greater than : </label>
+        <input type="number" step="0.01" ng-model="vm.balance" id="balanceSearch" required="required" class="form-control" placeholder="Balance" style="width:150px">
+      </div>
+    </form>
+  </div>
+</div>
+
+<script language="javascript">
+  $(document).ready(function() {
+    $(".nav li").removeClass("active");
+    $('#transactions').addClass('active');
+  });
+</script>

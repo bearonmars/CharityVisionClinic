@@ -1,0 +1,100 @@
+<div>
+  <div class="pstreet-header">
+    <h1>Add Transaction</h1>
+  </div>
+</div>
+
+<div>&nbsp;</div>
+
+<form role="form" name="frm">
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="name">Patient Name</label>
+    <div class="col-sm-6">
+      {{vm.patient.name}}
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="reason">Items</label>
+    <div class="col-sm-6">
+      <select class="form-control" ng-model="vm.selectedItemId" required>
+        <option ng-repeat="product in vm.products" value="{{product._id}}">{{product.name}} - ${{product.price}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-offset-2 col-sm-6">
+      <button ng-click="frm.$valid && vm.addItem()" class="btn btn-primary"><span class="glyphicon glyphiconplus"></span>Add Item</button>
+    </div>
+  </div>
+</form>
+
+<div ng-show="vm.items.length">
+  <table ng-cloak class="table table-hover table-condensed col-md-6">
+    <thead>
+      <tr>
+        <th class="col-md-4">Item</th>
+        <th class="col-md-2">Price</th>
+        <th class="col-md-4"></th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in vm.items">
+        <td>{{item.name}}</td>
+        <td>{{item.price | currency}}</td>
+        <td>
+          <div ng-show="item.isDoctorProduct">
+            <select class="form-control" ng-model="item.doctor._id">
+              <option value="" selected="selected">Select Doctor</option>
+              <option ng-repeat="doctor in vm.doctors" value='{{doctor._id}}'>{{doctor.name}}</option>
+            </select>
+          </div>
+        </td>
+        <td>
+          <a href="" ng-click="vm.removeItem($index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="3">&nbsp;</td>
+      </tr>
+      <tr>
+        <th>Subtotal</th>
+        <td>{{vm.getSubtotal() | currency}}</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <th>Discount
+          <input type="number" name="discount" ng-model="vm.discountPercentage" ng-change="vm.getDiscount()" min="0" max="100" step="5" style="margin-left:5px;padding-left:5px;width:50px" />% </th>
+        <td>{{vm.getDiscount() | currency}}</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <th>Total</th>
+        <td>{{vm.getTotal() | currency}}</td>
+        <td>&nbsp;</td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <form role="form" name="frm2">
+    <div class="form-group row">
+      <div class="col-sm-offset-2 col-sm-6">
+        <button ng-click="vm.addTransaction()" class="btn btn-primary"><span class="glyphicon glyphiconplus"></span>Add Transaction</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<a ui-sref="transactions">Back</a>
+
+
+
+<script language="javascript">
+  $(document).ready(function() {
+    $(".nav li").removeClass("active");
+    $('#transactions').addClass('active');
+  });
+</script>

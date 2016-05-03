@@ -1,0 +1,119 @@
+<div>
+  <div class="pstreet-header">
+    <h1><i class="fa fa-user-plus"></i> Add Patient</h1>
+  </div>
+</div>
+
+<form role="form" name="frm">
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="name">Name</label>
+    <div class="col-sm-6">
+      <input type="text" ng-model="vm.newPatient.name" class="form-control" required="required" id="name" placeholder="Enter Name">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="cellPhone">Cell Phone</label>
+    <div class="col-sm-6">
+      <input type="text" ng-model="vm.newPatient.cellPhone" class="form-control" id="cellPhone" placeholder="Enter Cell Phone">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="homePhone">Home Phone</label>
+    <div class="col-sm-6">
+      <input type="text" ng-model="vm.newPatient.homePhone" class="form-control" id="homePhone" placeholder="Enter Home Phone">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="email">Email</label>
+    <div class="col-sm-6">
+      <input type="email" ng-model="vm.newPatient.email" class="form-control" id="email" placeholder="Enter email">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="street">Street</label>
+    <div class="col-sm-6">
+      <input type="text" ng-model="vm.newPatient.street" class="form-control" required="required" id="street" placeholder="Enter Street">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="city">City</label>
+    <div class="col-sm-6">
+      <input type="text" ng-model="vm.newPatient.city" class="form-control" required="required" id="city" placeholder="Enter City">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="stateRegion">State/Region</label>
+    <div class="col-sm-6">
+      <input type="text" ng-model="vm.newPatient.stateRegion" class="form-control" id="stateRegion" placeholder="Enter State/Region">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="postalCode">Postal Code</label>
+    <div class="col-sm-6">
+      <input type="text" ng-model="vm.newPatient.postalCode" class="form-control" id="postalCode" placeholder="Enter Postal Code">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="country">Country</label>
+    <div class="col-sm-6">
+      <input type="text" ng-model="vm.newPatient.country" class="form-control" id="country" placeholder="Enter Country">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="motherSurname">Mother Surname</label>
+    <div class="col-sm-6">
+      <input type="text" ng-model="vm.newPatient.motherSurname" class="form-control" id="motherSurname" placeholder="Enter Mother Surname">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="governmentId">Government ID</label>
+    <div class="col-sm-6">
+      <input type="text" ng-model="vm.newPatient.governmentId" class="form-control" id="governmentId" placeholder="Enter Government ID">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="gender">Gender</label>
+    <div class="col-sm-6">
+      <div class="radio-inline">
+        <label>
+          <input type="radio" name="gender" ng-model="vm.newPatient.gender" value="M"> Male
+        </label>
+      </div>
+      <div class="radio-inline">
+        <label>
+          <input type="radio" name="gender" ng-model="vm.newPatient.gender" value="F"> Female
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="dob">Date of Birth</label>
+    <div class="col-sm-6">
+      <input type="date" ng-model="vm.newPatient.dob" class="form-control" required="required" id="dob" placeholder="Enter Date of Birth">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-2 form-control-label">How did you find us?</label>
+    <div class="col-md-6">
+      <select class="form-control" ng-model="vm.newPatient.howDidYouFindUsItem._id">
+        <option value="" selected="selected">None</option>
+        <option ng-repeat="item in vm.howDidYouFindUsItems" value='{{item._id}}'>{{item.name}}</option>
+      </select>
+    </div>
+    <div class="col-md-4">&nbsp;</div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-offset-2 col-sm-6">
+      <button ng-click="frm.$valid && vm.addPatient()" class="btn btn-primary"><span class="glyphicon glyphiconplus"></span> Add</button>
+    </div>
+  </div>
+</form>
+
+<a ui-sref="patients">Back</a>
+
+<script language="javascript">
+  $(document).ready(function() {
+    $(".nav li").removeClass("active");
+    $('#patients').addClass('active');
+  });
+</script>

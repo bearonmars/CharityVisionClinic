@@ -1,0 +1,82 @@
+<div>
+  <div class="pstreet-header">
+    <h1>Edit Doctor</h1>
+  </div>
+</div>
+
+<form role="form" name="frm">
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="name">Name</label>
+    <div class="col-sm-6">
+      <input type="text" ng-model="vm.doctor.name" class="form-control" required="required" id="name" placeholder="Enter Name">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="cellPhone">Cell Phone</label>
+    <div class="col-sm-6">
+      <input type="text" ng-model="vm.doctor.cellPhone" class="form-control" id="cellPhone" placeholder="Enter Cell Phone">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="homePhone">Home Phone</label>
+    <div class="col-sm-6">
+      <input type="text" ng-model="vm.doctor.homePhone" class="form-control" required="required" id="homePhone" placeholder="Enter Home Phone">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="email">Email</label>
+    <div class="col-sm-6">
+      <input type="email" ng-model="vm.doctor.email" class="form-control" required="required" id="email" placeholder="Enter email">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="street">Street</label>
+    <div class="col-sm-6">
+      <input type="text" ng-model="vm.doctor.street" class="form-control" required="required" id="street" placeholder="Enter Street">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="city">City</label>
+    <div class="col-sm-6">
+      <input type="text" ng-model="vm.doctor.city" class="form-control" required="required" id="city" placeholder="Enter City">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="stateRegion">State/Region</label>
+    <div class="col-sm-6">
+      <input type="text" ng-model="vm.doctor.stateRegion" class="form-control" required="required" id="stateRegion" placeholder="Enter State/Region">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="postalCode">Postal Code</label>
+    <div class="col-sm-6">
+      <input type="text" ng-model="vm.doctor.postalCode" class="form-control" required="required" id="postalCode" placeholder="Enter Postal Code">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="country">Country</label>
+    <div class="col-sm-6">
+      <input type="text" ng-model="vm.doctor.country" class="form-control" required="required" id="country" placeholder="Enter Country">
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-offset-2 col-sm-6">
+      <button ng-click="frm.$valid && vm.updateDoctor()" class="btn btn-primary"><span class="glyphicon glyphiconedit"></span> Update</button>
+    </div>
+  </div>
+</form>
+
+
+<div class="alert" ng-cloak>
+  <a href="javascript:history.back();">Back</a>
+</div>
+<!-- <div class="alert" ng-cloak>
+  <a ui-sref="doctors">Doctors</a>
+</div> -->
+
+<script language="javascript">
+  $(document).ready(function() {
+    $(".nav li").removeClass("active");
+    $('#admin').addClass('active');
+  });
+</script>

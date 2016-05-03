@@ -1,0 +1,51 @@
+<div>
+  <div class="pstreet-header">
+    <h1><i class="fa fa-area-chart"></i> Exams</h1>
+  </div>
+
+  <div class="no-print" style="margin-top:10px;margin-bottom:20px;">
+    <b>Create a new exam from the <a href="/patients">Patients tab</a>.</b>
+  </div>
+
+  <form class="no-print">
+    <fieldset class="form-group">
+      <input type="search" id="searchExam" class="form-control" ng-model="vm.searchText" placeholder="Seach Exams by Patient Name" />
+    </fieldset>
+  </form>
+
+  <table ng-cloak class="table table-hover table-striped" ng-show="vm.exams.length">
+    <thead>
+      <tr>
+        <!-- <th class="no-print">&nbsp;</th> -->
+        <th class="no-print"><a href="" ng-click="vm.sortBy='patient.name'; vm.updateSort()">Patient</a></th>
+        <th class="no-print"><a href="" ng-click="vm.sortBy='doctor.name'; vm.updateSort()">Doctor</a></th>
+        <th>Acuity</th>
+        <th><a href="" ng-click="vm.sortBy='created'; vm.updateSort()">Date Entered</a></th>
+        <th class="no-print">&nbsp;</th>
+        <th class="no-print">&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr dir-paginate="exam in vm.exams | itemsPerPage: vm.perPage" total-items="vm.examsCount">
+        <td class="no-print"><a href="/patients/{{exam.patient._id}}">{{exam.patient.name}}</a></td>
+        <td>{{exam.doctor.name}}</td>
+        <td>(L) {{exam.unaidedAcuity.leftEye.first}}/{{exam.unaidedAcuity.leftEye.second}} (R) {{exam.unaidedAcuity.rightEye.first}}/{{exam.unaidedAcuity.rightEye.second}}</td>
+        <td>{{exam.created | date: 'short' }}</td>
+        <td class="no-print">
+          <a href="/exams/edit/{{exam._id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+        </td>
+        <td class="no-print">
+          <a href="" ng-click="vm.removeExam(exam)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <dir-pagination-controls on-page-change="vm.pageChanged(newPageNumber)"></dir-pagination-controls>
+</div>
+
+<script language="javascript">
+  $(document).ready(function() {
+    $(".nav li").removeClass("active");
+    $('#exams').addClass('active');
+  });
+</script>

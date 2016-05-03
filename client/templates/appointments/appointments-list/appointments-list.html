@@ -1,0 +1,57 @@
+<div>
+  <div class="pstreet-header">
+    <h1><i class="fa fa-calendar"></i> Appointments</h1>
+  </div>
+
+  <div class="no-print" style="margin-top:10px;margin-bottom:20px;">
+    <b>Create a new appointment from the <a href="/patients">Patients tab</a>.</b>
+  </div>
+
+  <form>
+    <fieldset class="form-group">
+      <input type="search" id="searchAppointment" class="form-control" ng-model="vm.searchText" placeholder="Seach Appointments by Patient Name or Appointment Reason" />
+    </fieldset>
+  </form>
+
+  <table ng-cloak class="table table-hover table-striped" ng-show="vm.appointments.length">
+    <thead>
+      <tr>
+        <!-- <th>&nbsp;</th> -->
+        <th><a href="" ng-click="vm.sortBy='patient.name'; vm.updateSort()">Patient Name</a></th>
+        <th><a href="" ng-click="vm.sortBy='reason'; vm.updateSort()">Reason</a></th>
+        <th><a href="" ng-click="vm.sortBy='appointmentDate'; vm.updateSort()">Appointment Date</a></th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <!-- <tr ui-sref="appointmentDetails({ appointmentId: appointment._id })" dir-paginate="appointment in vm.appointments | itemsPerPage: vm.perPage" total-items="vm.appointmentsCount"> -->
+    <tr dir-paginate="appointment in vm.appointments | itemsPerPage: vm.perPage" total-items="vm.appointmentsCount">
+      <!-- <td>
+        <a href="/appointments/{{appointment._id}}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+      </td> -->
+      <td><a href="/patients/{{appointment.patient._id}}">{{appointment.patient.name}}</a></td>
+      <td>{{appointment.reason}}</td>
+      <td>{{appointment.appointmentDate | date:'medium' }}</td>
+      <td>
+        <a href="/appointments/edit/{{appointment._id}}"><i class="fa fa-calendar"></i></a>
+      </td>
+      <td>
+        <a href="" ng-click="vm.removeAppointment(appointment)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+      </td>
+    </tr>
+  </table>
+  <dir-pagination-controls on-page-change="vm.pageChanged(newPageNumber)"></dir-pagination-controls>
+
+  <div ng-hide="vm.appointments.length " ng-cloak>
+    <strong>No appointments.</strong>
+  </div>
+
+  <!-- <input type="checkbox" ng-model="vm.oldAppointments" ng-change="vm.showOldAppointments()" />Show Past Appointments -->
+</div>
+
+<script language="javascript">
+  $(document).ready(function() {
+    $(".nav li").removeClass("active");
+    $('#appointments').addClass('active');
+  });
+</script>

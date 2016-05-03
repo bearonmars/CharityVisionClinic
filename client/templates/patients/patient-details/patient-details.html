@@ -1,0 +1,246 @@
+<div class="caption-full">
+  <h1><i class="fa fa-user"></i> {{vm.patient.name}}</h1>
+</div>
+
+<div ng-cloak style="margin-top:10px; margin-bottom:20px;">
+  <a ui-sref="patients">Patients</a> |
+  <a href="/patients/edit/{{vm.patient._id}}">Edit</a> |
+  <a href="/appointments/create/{{vm.patient._id}}">Create Appointment</a> |
+  <a href="/exams/create/{{vm.patient._id}}">Create Exam</a> |
+  <a href="/transactions/create/{{vm.patient._id}}">Create Transaction</a>
+</div>
+
+
+<div ng-cloak style="margin-top:20px; min-height:560px;">
+  <md-content>
+    <md-tabs md-dynamic-height md-border-bottom>
+
+      <!-- General Info -->
+      <md-tab label="General Info">
+        <md-content class="md-padding">
+          <h3 class="md-display-1">General Info</h3>
+
+          <div class="row" style="margin-top:20px">
+            <div class="col-sm-2">
+              <label>Cell Phone:</label>
+            </div>
+            <div class="col-sm-10">{{vm.patient.cellPhone}}</div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2">
+              <label>Home Phone:</label>
+            </div>
+            <div class="col-sm-10">{{vm.patient.homePhone}}</div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2">
+              <label>Email:</label>
+            </div>
+            <div class="col-sm-10">{{vm.patient.email}}</div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2">
+              <label>Address:</label>
+            </div>
+            <div class="col-sm-10">
+              {{vm.patient.street}}
+              <br /> {{vm.patient.city}} {{vm.patient.stateRegion}} {{vm.patient.postalCode}}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2">
+              <label>Mother Surname:</label>
+            </div>
+            <div class="col-sm-10">{{vm.patient.motherSurname}}</div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2">
+              <label>Government ID:</label>
+            </div>
+            <div class="col-sm-10">{{vm.patient.governmentId}}</div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2">
+              <label>Gender:</label>
+            </div>
+            <div class="col-sm-10">{{vm.patient.gender}}</div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2">
+              <label>Date Of Birth:</label>
+            </div>
+            <div class="col-sm-10">{{vm.patient.dob | date: 'MM/dd/yyyy'}}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2">
+              <label>How did you find us:</label>
+            </div>
+            <div class="col-sm-10">{{vm.patient.howDidYouFindUsItem.name}}</div>
+          </div>
+
+        </md-content>
+      </md-tab>
+
+      <!-- Appointments -->
+      <md-tab label="Appointments">
+        <md-content class="md-padding">
+          <h4 class="md-display-1">Appointments</h4>
+
+          <table ng-cloak class="table table-hover table-condensed" ng-show="vm.appointments.length">
+            <thead>
+              <tr>
+                <th><a href="" ng-click="vm.sortBy='reason'; vm.updateSort()">Reason</a></th>
+                <th><a href="" ng-click="vm.sortBy='appointmentDate'; vm.updateSort()">Appointment Date</a></th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+              </tr>
+            </thead>
+            <tr dir-paginate="appointment in vm.appointments | itemsPerPage: vm.perPage" total-items="vm.appointmentsCount" pagination-id="appointments">
+              <td>{{appointment.reason}}</td>
+              <td>{{appointment.appointmentDate | date:'medium' }}</td>
+              <td>
+                <a href="/appointments/edit/{{appointment._id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+              </td>
+              <td>
+                <a href="" ng-click="vm.removeAppointment(appointment)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+              </td>
+            </tr>
+          </table>
+          <dir-pagination-controls pagination-id="appointments" on-page-change="vm.appointmentPageChanged(newPageNumber)"></dir-pagination-controls>
+
+          <div ng-hide="vm.appointments.length " ng-cloak>
+            <strong>No appointments.</strong>
+          </div>
+
+        </md-content>
+      </md-tab>
+
+      <!-- Exams -->
+      <md-tab label="Exams">
+        <md-content class="md-padding">
+          <h1 class="md-display-1">Exams</h1>
+
+          <table ng-cloak class="table table-hover table-striped" ng-show="vm.exams.length">
+            <thead>
+              <tr>
+                <!-- <th class="no-print">&nbsp;</th> -->
+                <th class="no-print"><a href="" ng-click="vm.sortBy='patient.name'; vm.updateSort()">Patient</a></th>
+                <th class="no-print"><a href="" ng-click="vm.sortBy='doctor.name'; vm.updateSort()">Doctor</a></th>
+                <th>Acuity</th>
+                <th><a href="" ng-click="vm.sortBy='created'; vm.updateSort()">Date Entered</a></th>
+                <th class="no-print">&nbsp;</th>
+                <th class="no-print">&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr dir-paginate="exam in vm.exams | itemsPerPage: vm.perPage" total-items="vm.examsCount">
+                <td class="no-print"><a href="/patients/{{exam.patient._id}}">{{exam.patient.name}}</a></td>
+                <td>{{exam.doctor.name}}</td>
+                <td>(L) {{exam.unaidedAcuity.leftEye.first}}/{{exam.unaidedAcuity.leftEye.second}} (R) {{exam.unaidedAcuity.rightEye.first}}/{{exam.unaidedAcuity.rightEye.second}}</td>
+                <td>{{exam.created | date: 'short' }}</td>
+                <td class="no-print">
+                  <a href="/exams/edit/{{exam._id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                </td>
+                <td class="no-print">
+                  <a href="" ng-click="vm.removeExam(exam)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dir-pagination-controls on-page-change="vm.pageChanged(newPageNumber)"></dir-pagination-controls>
+
+          <!-- <table ng-cloak class="table table-hover table-condensed" ng-show="vm.exams.length">
+            <thead>
+              <tr>
+                <th><a href="" ng-click="vm.sortBy='created'; vm.updateSort()">Exam Date</a></th>
+                <th>Blood Pressure</th>
+                <th>Blood Type</th>
+                <th>Diabetic</th>
+                <th>Vision</th>
+                <th class="no-print">&nbsp;</th>
+                <th class="no-print">&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr dir-paginate="exam in vm.exams | itemsPerPage: vm.perPage" total-items="vm.examsCount" pagination-id="exams">
+                <td>{{exam.created | date: 'short' }}</td>
+                <td>{{exam.bloodPressure.systolic}}/{{exam.bloodPressure.diastolic}}</td>
+                <td>{{exam.bloodType}}</td>
+                <td>{{exam.diabetic}}</td>
+                <td>{{exam.visualAcuity.left}}/{{exam.visualAcuity.right}}</td>
+                <td class="no-print">
+                  <a href="/exams/edit/{{exam._id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                </td>
+                <td class="no-print">
+                  <a href="" ng-click="vm.removeExam(exam)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dir-pagination-controls pagination-id="exams" on-page-change="vm.examPageChanged(newPageNumber)"></dir-pagination-controls> -->
+
+          <div class="no-print" ng-hide="vm.exams.length " ng-cloak>
+            <strong>No exams.</strong>
+          </div>
+
+        </md-content>
+      </md-tab>
+
+      <!-- Transactions -->
+      <md-tab label="Transactions">
+        <md-content class="md-padding">
+          <h1 class="md-display-1">Transactions</h1>
+
+          <table ng-cloak class="table table-hover table-condensed" ng-show="vm.transactions.length">
+            <thead>
+              <tr>
+                <th><a href="" ng-click="vm.sortBy='created'; vm.updateSort()">Transaction Date</a></th>
+                <th>Items</th>
+                <th>Subtotal</th>
+                <th>Discount</th>
+                <th>Total</th>
+                <th>Payment</th>
+                <th>Balance</th>
+                <th class="no-print">&nbsp;</th>
+                <th class="no-print">&nbsp;</th>
+              </tr>
+            </thead>
+            <tr dir-paginate="transaction in vm.transactions | itemsPerPage: vm.perPage" total-items="vm.transactionsCount" pagination-id="transactions">
+              <td>{{transaction.created | date:'medium' }}</td>
+              <td>{{transaction.items[0].product}}</td>
+              <td>{{transaction.subtotal | currency}}</td>
+              <td>{{transaction.discount | currency}}</td>
+              <td>{{transaction.total | currency}}</td>
+              <td>{{transaction.paymentTotal | currency}}</td>
+              <td style="font-weight:bold" ng-style="transaction.balance > 0 && {'color':'red'} || {'color': 'blue'}">{{transaction.balance | currency}}</td>
+              <td class="no-print">
+                <a href="/transactions/edit/{{transaction._id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+              </td>
+              <td class="no-print">
+                <a href="" ng-click="vm.removeTransaction(transaction)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+              </td>
+            </tr>
+          </table>
+          <dir-pagination-controls pagination-id="transactions" on-page-change="vm.transactionPageChanged(newPageNumber)"></dir-pagination-controls>
+
+          <div class="no-print" ng-hide="vm.transactions.length " ng-cloak>
+            <strong>No transactions.</strong>
+          </div>
+
+        </md-content>
+      </md-tab>
+
+    </md-tabs>
+  </md-content>
+</div>
+
+<p>&nbsp;</p>
+
+<script language="javascript">
+  $(document).ready(function() {
+    $(".nav li").removeClass("active");
+    $('#patients').addClass('active');
+  });
+</script>

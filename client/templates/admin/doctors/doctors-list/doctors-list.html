@@ -1,0 +1,61 @@
+<div>
+  <div class="pstreet-header">
+    <h1><i class="fa fa-user-md"></i> Doctors</h1>
+  </div>
+
+  <form>
+    <fieldset class="form-group">
+      <input type="search" id="searchDoctor" class="form-control" ng-model="vm.searchText" placeholder="Doctor Name, Phone Number, or City" />
+    </fieldset>
+  </form>
+
+  <table ng-cloak class="table table-hover table-condensed" ng-show="vm.doctors.length">
+    <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th><a href="" ng-click="vm.sortBy='name'; vm.updateSort()">Name</a></th>
+        <th>Cell Phone</th>
+        <th>Home Phone</th>
+        <th>Email</th>
+        <th>Street</th>
+        <th><a href="" ng-click="vm.sortBy='city'; vm.updateSort()">City</a></th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <!-- <tr ui-sref="doctorDetails({ doctorId: doctor._id })" dir-paginate="doctor in vm.doctors | itemsPerPage: vm.perPage" total-items="vm.doctorsCount"> -->
+    <tr dir-paginate="doctor in vm.doctors | itemsPerPage: vm.perPage" total-items="vm.doctorsCount">
+      <td>
+        <a href="/admin/doctors/{{doctor._id}}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+      </td>
+      <td>{{doctor.name}}</td>
+      <td>{{doctor.cellPhone}}</td>
+      <td>{{doctor.homePhone}}</td>
+      <td>{{doctor.email}}</td>
+      <td>{{doctor.street}}</td>
+      <td>{{doctor.city}}</td>
+      <td>
+        <a href="/admin/doctors/edit/{{doctor._id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+      </td>
+      <td>
+        <a href="" ng-click="vm.removeDoctor(doctor)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+      </td>
+    </tr>
+  </table>
+  <dir-pagination-controls on-page-change="vm.pageChanged(newPageNumber)"></dir-pagination-controls>
+
+  <div ng-hide="vm.doctors.length " ng-cloak>
+    <strong>No doctors.</strong> Please add doctors. :)
+  </div>
+
+  <div class="alert" ng-cloak>
+    <a ui-sref="doctorCreate" style="font-weight:bold">Add New Doctor</a>
+  </div>
+</div>
+
+<script language="javascript">
+  $(document).ready(function() {
+    $(".nav li").removeClass("active");
+    $('#admin').addClass('active');
+  });
+</script>

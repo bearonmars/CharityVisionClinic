@@ -1,0 +1,48 @@
+<div>
+  <div class="pstreet-header">
+    <h1><i class="fa fa-puzzle-piece"></i> How Did You Find Us</h1>
+  </div>
+
+  <form>
+    <fieldset class="form-group">
+      <input type="search" id="searchHowDidYouFindUsItem" class="form-control" ng-model="vm.searchText" placeholder="HowDidYouFindUsItem Name" />
+    </fieldset>
+  </form>
+
+  <table ng-cloak class="table table-hover table-condensed" ng-show="vm.items.length">
+    <thead>
+      <tr>
+        <th class="col-md-7"><a href="" ng-click="vm.sortBy='name'; vm.updateSort()">Name</a></th>
+        <th class="col-md-1">&nbsp;</th>
+      </tr>
+    </thead>
+    <!-- <tr ui-sref="itemDetails({ itemId: item._id })" dir-paginate="item in vm.items | itemsPerPage: vm.perPage" total-items="vm.itemsCount"> -->
+    <tr dir-paginate="item in vm.items | itemsPerPage: vm.perPage" total-items="vm.itemsCount">
+      <td><input style="width:100%; height:100%; border-width:0px;" ng-model="item.name" ng-blur="vm.updateHowDidYouFindUsItem(item);" /></td>
+      <td>
+        <a href="" ng-click="vm.removeHowDidYouFindUsItem(item)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+      </td>
+    </tr>
+  </table>
+  <dir-pagination-controls on-page-change="vm.pageChanged(newPageNumber)"></dir-pagination-controls>
+
+  <div ng-hide="vm.items.length " ng-cloak>
+    <strong>No items.</strong> Please add items. :)
+  </div>
+
+  <form class="form-inline" name="frm">
+    <div class="form-group">
+      <label class="sr-only" for="exampleInputEmail3">Name</label>
+      <input type="text" ng-model="vm.newHowDidYouFindUsItem.name" required="required" class="form-control" id="name" placeholder="HowDidYouFindUsItem Name">
+    </div>
+    <button ng-click="frm.$valid && vm.addHowDidYouFindUsItem()" class="btn btn-primary"><span class="glyphicon glyphiconplus"></span> Add</button>
+  </form>
+
+</div>
+
+<script language="javascript">
+  $(document).ready(function() {
+    $(".nav li").removeClass("active");
+    $('#admin').addClass('active');
+  });
+</script>
